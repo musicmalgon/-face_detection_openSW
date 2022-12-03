@@ -11,6 +11,15 @@
   This is a image for understading.
   ![feature-branch](https://user-images.githubusercontent.com/113411490/204792929-e8a674ab-c514-4ab0-a973-4b73947fc5fb.svg)
 
+# Note
+- Install Pillow. Use this commad on your terminal
+```
+python -m pip --upgrade pip
+python -m pip --upgrade Pillow
+```
+
 # Add your reference here
 
 - https://google.com (example)
+- https://pillow.readthedocs.io/en/stable/installation.html
+- https://foss4g.tistory.com/1502
