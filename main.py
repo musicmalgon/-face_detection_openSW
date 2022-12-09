@@ -1,6 +1,5 @@
 # OSS term project code.
 # 202234900 Seol Jaemin(blackseol@gachon.ac.kr)
-
 import tkinter
 from PIL import ImageTk, Image
 import cv2
@@ -35,7 +34,7 @@ def videoShow():
     img.resize((vidWidth, vidHeight))
     imgtk = ImageTk.PhotoImage(image=img)
 
-    videolb.imgtk = imgtk
+    videolb.image = imgtk
     videolb.configure(image=imgtk)
     videolb.after(16, videoShow)
 
@@ -44,15 +43,17 @@ def videoShow():
 topText = tkinter.Label(win, text="Recognizing faces...", bg="white")
 topText.grid(row=0, column=0)
 
-def resize(e):
+def resize():
+    global vidWidth
+    global vidHeight 
     newWidth = win.winfo_width()
     newHeight = win.winfo_height()
+    vidWidth = newWidth
+    vidHeight = newHeight
     videoFrame.config(width=newWidth, height=newHeight)
     videolb.config(width=newWidth, height=newHeight)
-
-    
-
-win.bind('<Configure>', resize)
+    win.after(16, resize)
 
 videoShow()
+#resize()
 win.mainloop()
