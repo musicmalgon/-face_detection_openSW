@@ -23,3 +23,15 @@ python -m pip --upgrade Pillow
 - https://google.com (example)
 - https://pillow.readthedocs.io/en/stable/installation.html
 - https://foss4g.tistory.com/1502
+- https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
+- https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
+
+# memo
+requirments
+
+numpy
+PIL
+cv2
+yunet
+
+- 
