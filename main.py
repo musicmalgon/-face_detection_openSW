@@ -1,4 +1,4 @@
-# OSS term project code.
+# OSS term project code. Team 11.
 # Face recognition with open CV
 # 202234900 Seol Jaemin(blackseol@gachon.ac.kr)
 print("Loading... Please wait...")
