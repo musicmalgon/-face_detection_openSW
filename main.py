@@ -5,22 +5,35 @@ print("Loading... Please wait...")
 import os
 import sys
 import argparse
+import json
+import time
 import warnings
+from threading import Timer
 import tkinter as tk
+from tkinter import messagebox
 import numpy as np
 from PIL import ImageTk, Image
 import cv2 as cv
 from yunet import YuNet
 from sface import SFace
+np.set_printoptions(threshold = sys.maxsize)
+if os.path.exists("tmp_data.txt"):
+    os.remove("tmp_data.txt")
+if not os.path.exists("data.txt"):
+    file = open("data.txt", "w")
+    file.close()
+if not os.path.exists("log.txt"):
+    with open("log.csv", "w") as file:
+        file.write("Time,Name,Activity\n")
 #argparse
 parser = argparse.ArgumentParser(description="Face detection and recognition using open CV.\
 \n2022. Gachon Univ. OSS team 11.\n202234900 Seol Jaemin\n2022*****NAMEHERE\n2022*****NAMEHERE\n2022*****NAMEHERE")
 parser.add_argument('resolution', help="vertical resolution of window in interger", action="store")
-parser.add_argument('-c', '--camera', help="camera number.", dest="camera_number" ,action="store", default=0)
-parser.add_argument('-l', '--lowSpec', help="Use this option if you are using low spec PC", action="store_true", default=False)
-parser.add_argument('-w', '--showWarning', help="enables warning message", action="store_true", default=False)
+parser.add_argument('--camera', '-c', help="camera number.", dest="camera_number" ,action="store", default=0)
+parser.add_argument('--lowSpec', '-l', help="Use this option if you are using low spec PC", action="store_true", default=False)
+parser.add_argument('--showWarning', '-w', help="enables warning message", action="store_true", default=False)
 parser.add_argument('--cuda', help="use Nvidia gpu accelleratioin", action="store_true", default=False)
-parser.add_argument('-f', '--fullScreen', help="display fullScreen", action="store_true", default=False)
+parser.add_argument('--fullScreen', '-f', help="display fullScreen", action="store_true", default=False)
 
 args = parser.parse_args()
 #setup variables
@@ -110,15 +123,136 @@ def videoGUI():
         sys.exit(1)
     videolb.after(dtime, videoGUI)
 
+count = 4
+def faceRegistrationDelay():
+    global count
+    count = count - 1
+    if count <= 0:
+        count = 4
+        faceRegistration()
+        return
+    topText.config(text="Face Registration starts in {}...".format(count))
+    delay = Timer(1, faceRegistrationDelay)
+    delay.start()
+
 def faceRegistration():
-    #status, frame = video.read()
-    print("Working")
+    topText.config(text="Please select task to do")
+    try:
+        status, frame = video.read()
+        face = detector.infer(frame)
+        faceCount = 0
+        for f in (face if face is not None else []):
+            faceCount = faceCount + 1
+        if faceCount == 1:
+            #encode
+            status, frame = cv.imencode('.jpg', frame)
+            frame = np.array2string(frame)
+            frame = frame[1:-1]
+            face = np.array2string(face)
+            face = face[2:-2]
+            #save it on file
+            jsonObj = {"name":inputBox.get(),"img":frame, "detect":face}
+            jsonStr = json.dumps(jsonObj)
+            jsonStr = jsonStr.replace("\n", " ")
+            jsonStr = jsonStr + "\n"
+            with open("data.txt", "a") as file:
+                file.write(jsonStr)
+            with open("log.csv", "a") as file:
+                file.write(time.strftime("%Y-%m-%d/%H:%M:%S")+","+jsonObj['name']+",registration\n")
+            messagebox.showinfo(title="Face Registration success", message="Face Registrated.")
+        elif faceCount > 1:
+            messagebox.showwarning(title="Face Registration error",
+                                    message="Two or more face detected.\nPlease try again.")
+        else:
+            messagebox.showwarning(title="Face Registration error",
+                                    message="Unable to detect face.\nPlease try again.")
+    except:
+        #print("Face Registration error.\nPleas try again.")
+        messagebox.showwarning(title="Face Registration error", message="Please try again.\nIf error continues, reboot the computer")
 
 def faceRecognition():
-    print("facercog")
+    topText.config(text="Please select task to do")
+    try:
+        status, frame1 = video.read()
+        face1 = detector.infer(frame1)
+        faceCount = 0
+        for f in (face1 if face1 is not None else []):
+            faceCount = faceCount + 1
+        if faceCount == 1:
+            with open("data.txt", "r") as file:
+                jsonStr = file.readline()
+                while jsonStr:
+                    jsonStr = jsonStr.strip()
+                    jsonObj = json.loads(jsonStr)
+                    name = jsonObj['name']
+                    frame = jsonObj['img']
+                    face = jsonObj['detect']
 
-def openLog():
-    print("openlog")
+                    frame = frame.split()
+                    frame = np.array(frame)
+                    frame = frame.astype(np.uint8)
+                    frame = cv.imdecode(frame, cv.IMREAD_COLOR)
+
+                    face = face.split()
+                    face = [face]
+                    face = np.array(face)
+                    face = face.astype(np.float32)
+
+                    #for testing
+                    result = recognizer.match(frame, face[0][:-1], frame1, face1[0][:-1])
+                    if result:
+                        messagebox.showinfo(title="Face Recognition success", message="Welcome, {}.".format(name))
+                        with open("log.csv", "a") as file:
+                            logStr = time.strftime("%Y-%m-%d/%H:%M:%S")+","+name+",recognition\n"
+                            file.write(logStr)
+                        return
+                    else:
+                        jsonStr = file.readline()
+            messagebox.showwarning(title="Face Recognition failed",
+                                message="Unregistrated face data.")
+        elif faceCount > 1:
+            messagebox.showwarning(title="Face Recognition error",
+                                    message="Two or more face detected.\nPlease try again.")
+        else:
+            messagebox.showwarning(title="Face Recognition error",
+                                    message="Unable to detect face.\nPlease try again.")
+    except:
+        messagebox.showwarning(title="Face Recognition error", message="Please try it again.\nIf error continues, reboot the computer")
+
+def delData():
+    try:
+        os.rename("data.txt", "tmp_data.txt")
+        with open("tmp_data.txt", "r") as file:
+            jsonStr = file.readline()
+            while jsonStr:
+                jsonStr = jsonStr.strip()
+                jsonObj = json.loads(jsonStr)
+                if inputBox.get() == jsonObj['name']:
+                    delStr = jsonStr
+                    break
+                else:
+                    jsonStr = file.readline()
+        if not jsonStr:
+            messagebox.showwarning(title="Delete error", message="Can't find name")
+            os.rename("tmp_data.txt","data.txt")
+            return
+        with open("tmp_data.txt", "r") as input:
+            with open("data.txt", "w") as output:
+                line = input.readline()
+                while line:
+                    line = line.strip()
+                    if line != delStr:
+                        output.write(line + "\n")
+                        line = input.readline()
+                    else:
+                        line = input.readline()
+        if os.path.exists("tmp_data.txt"):
+            os.remove("tmp_data.txt")
+        with open("log.csv", "a") as file:
+            file.write(time.strftime("%Y-%m-%d/%H:%M:%S")+","+jsonObj['name']+",delete\n")
+        messagebox.showinfo(title="Deleted", message="{}'s data is deleted".format(inputBox.get()))
+    except:
+        messagebox.showwarning(title="Delete error", message="Please try it again.\nIf error continues, reboot the computer")
 
 
 #labels
@@ -126,10 +260,13 @@ def openLog():
 pixelImg = tk.PhotoImage(width=1, height=1)
 topText = tk.Label(win, text="Please select task to do", bg="white",width=hres, image=pixelImg, compound="c")
 topText.place(x=0,y=0)
+#input
+inputBox = tk.Entry(win)
+inputBox.place(x=0, y=vres-bres-19, width=hres)
 #face registration button
 btnWidth = int(hres / 3) #3 buttons
 
-faceRegBtn = tk.Button(win, width=btnWidth, height=bres, command=faceRegistration, text="Registration",
+faceRegBtn = tk.Button(win, width=btnWidth, height=bres, command=faceRegistrationDelay, text="Registration",
                 image=pixelImg, compound="c")
 faceRegBtn.place(x=0,y=vres-bres)
 
@@ -137,7 +274,7 @@ faceRecogBtn = tk.Button(win, width=btnWidth, height=bres, command=faceRecogniti
                 image=pixelImg, compound="c")
 faceRecogBtn.place(x=btnWidth,y=vres-bres)
 
-openLogBtn = tk.Button(win, width=btnWidth, height=bres, command=openLog, text="Recognition",
+openLogBtn = tk.Button(win, width=btnWidth, height=bres, command=delData, text="Delete data",
                 image=pixelImg, compound="c")
 openLogBtn.place(x=btnWidth*2,y=vres-bres)
 
