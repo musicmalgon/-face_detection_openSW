@@ -25,6 +25,7 @@ python -m pip --upgrade Pillow
 - https://foss4g.tistory.com/1502
 - https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
 - https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
+- https://jdhao.github.io/2020/03/17/base64_opencv_pil_image_conversion/
 
 # memo
 requirments
