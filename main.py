@@ -22,7 +22,7 @@ if os.path.exists("tmp_data.txt"):
 if not os.path.exists("data.txt"):
     file = open("data.txt", "w")
     file.close()
-if not os.path.exists("log.txt"):
+if not os.path.exists("log.csv"):
     with open("log.csv", "w") as file:
         file.write("Time,Name,Activity\n")
 #argparse
