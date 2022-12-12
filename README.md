@@ -1,8 +1,10 @@
 # Face Recognition OSS Team 11.
 This is face recognition program based on open CV. It uses YuNet as a face detector, and sface as a face recognizer. It supports GUI. You still need to run this code on CLI, however.
 # License
-- yunet.py and face_detection_yunet_2022mar.onnx follows MIT license.
-- Other files follows Apache 2.0.
+- yunet.py and face_detection_yunet_2022mar.onnx are licensed under the MIT license.
+- eye-outline.ico is from ionicons, link in Reference. Original svg file was converted to ico. MIT licencse
+- Other files are licensed under the Apache 2.0.
+- I DO NOT own the file that not made by myself. Before Use this project, check for the licence of each file.
 ## Feature
 - GUI
 - face registration
@@ -12,7 +14,11 @@ This is face recognition program based on open CV. It uses YuNet as a face detec
 # Demo
 - working on it
 photo by Spencer Selover, Mateus Souza, Yogendra Singh
-# How to use
+- Type name into input box and click Registration to add new face. The program waits 3 seconds and capture the image.
+- click Recognition to Recognize face. The program will show name.
+- Type name into iunput box and click Delete data. It will delete name's face data.
+- Logs are saved in log.csv
+# Install
 1. Install miniconda 3. https://docs.conda.io/en/latest/miniconda.html
 2. Run anaconda prompt
 3. Download the project.
@@ -46,9 +52,10 @@ A: There are some causes.
 3. The person changed too much to recognize.
 4. Camera is changed.
 
-# References
+# Reference
 - https://foss4g.tistory.com/1502
 - https://docs.python.org/3/library/tk.html
 - https://pillow.readthedocs.io/en/stable/installation.html
 - https://github.com/opencv/opencv_zoo/tree/master/models/face_detection_yunet
 - https://github.com/opencv/opencv_zoo/tree/master/models/face_recognition_sface
+- https://github.com/ionic-team/ionicons

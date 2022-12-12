@@ -1,6 +1,19 @@
 # OSS term project code. Team 11.
 # Face recognition with open CV
 # 202234900 Seol Jaemin(blackseol@gachon.ac.kr)
+# Copyright 2022 Jaemin-Seol(jaemin.seol@outlook.com)
+
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+
+#     http://www.apache.org/licenses/LICENSE-2.0
+
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 print("Loading... Please wait...")
 import os
 import sys
@@ -27,7 +40,7 @@ if not os.path.exists("log.csv"):
         file.write("Time,Name,Activity\n")
 #argparse
 parser = argparse.ArgumentParser(description="Face detection and recognition using open CV.\
-\n2022. Gachon Univ. OSS team 11.\n202234900 Seol Jaemin\n2022*****NAMEHERE\n2022*****NAMEHERE\n2022*****NAMEHERE")
+\n2022. Gachon Univ. OSS team 11.\n202234900 Seol Jaemin\n202234895Park JungWan\n202234883Nam JiWon\n202234890Park DongChan")
 parser.add_argument('resolution', help="vertical resolution of window in interger", action="store")
 parser.add_argument('--camera', '-c', help="camera number.", dest="camera_number" ,action="store", default=0)
 parser.add_argument('--showWarning', '-w', help="enables warning message", action="store_true", default=False)
@@ -60,6 +73,7 @@ win.configure(background="white")
 win.title("Face-recognition")
 win.geometry(geoStr)
 win.resizable(False, False)
+win.iconbitmap("eye-outline.ico")
 if args.fullScreen:
     win.attributes('-fullscreen', True)
 else:
