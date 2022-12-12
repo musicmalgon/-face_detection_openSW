@@ -12,8 +12,8 @@ This is face recognition program based on open CV. It uses YuNet as a face detec
 - delete face data
 - log on log.csv
 # Demo
-[![Youtube demo Video](http://img.youtube.com/vi/nQ3bf4chPDQ/0.jpg)](https://youtu.be/nQ3bf4chPDQ)
-- click image to View demo video.
+[![Youtube demo Video](http://img.youtube.com/vi/nQ3bf4chPDQ/0.jpg)](https://youtu.be/nQ3bf4chPDQ)  
+click image to View demo video.
 ![Logimage](https://user-images.githubusercontent.com/100254362/206968705-610e8edb-0308-4581-ab95-4b1265a2a40c.jpg)
 
 photo by Spencer Selover, Mateus Souza, Yogendra Singh
@@ -22,6 +22,7 @@ photo by Spencer Selover, Mateus Souza, Yogendra Singh
 - Type name into iunput box and click Delete data. It will delete name's face data.
 - Logs are saved in log.csv
 # Install
+**This program do not supports MacOS. Please use Windows 10/11 only. I highly recommend you to use Windows 11 on AMD64(x86_64)**
 1. Install miniconda 3. https://docs.conda.io/en/latest/miniconda.html
 2. Run anaconda prompt
 3. Download the project.
