@@ -1,13 +1,17 @@
 # Face Recognition OSS Team 11.
 This is face recognition program based on open CV. It uses YuNet as a face detector, and sface as a face recognizer. It supports GUI. You still need to run this code on CLI, however.
+# License
+- yunet.py and face_detection_yunet_2022mar.onnx follows MIT license.
+- Other files follows Apache 2.0.
 ## Feature
 - GUI
 - face registration
 - face recognition
-- delete face data.
+- delete face data
 - log on log.csv
 # Demo
 - working on it
+photo by Spencer Selover, Mateus Souza, Yogendra Singh
 # How to use
 1. Install miniconda 3. https://docs.conda.io/en/latest/miniconda.html
 2. Run anaconda prompt
