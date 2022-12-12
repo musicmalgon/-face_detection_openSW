@@ -4,7 +4,7 @@ This is face recognition program based on open CV. It uses YuNet as a face detec
 - yunet.py and face_detection_yunet_2022mar.onnx are licensed under the MIT license.
 - eye-outline.ico is from ionicons, link in Reference. Original svg file was converted to ico. MIT licencse
 - Other files are licensed under the Apache 2.0.
-- I DO NOT own the file that not made by myself. Before Use this project, check for the licence of each file.
+- I do NOT own the file that not made by myself. Before Use this project, check for the licence of each file.
 ## Feature
 - GUI
 - face registration
@@ -12,7 +12,10 @@ This is face recognition program based on open CV. It uses YuNet as a face detec
 - delete face data
 - log on log.csv
 # Demo
-- working on it
+[![Youtube demo Video](http://img.youtube.com/vi/nQ3bf4chPDQ/0.jpg)](https://youtu.be/nQ3bf4chPDQ)
+- click image to View demo video.
+![Logimage](https://user-images.githubusercontent.com/100254362/206968705-610e8edb-0308-4581-ab95-4b1265a2a40c.jpg)
+
 photo by Spencer Selover, Mateus Souza, Yogendra Singh
 - Type name into input box and click Registration to add new face. The program waits 3 seconds and capture the image.
 - click Recognition to Recognize face. The program will show name.
