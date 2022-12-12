@@ -28,7 +28,7 @@ photo by Spencer Selover, Mateus Souza, Yogendra Singh
 4. Go to the project file directory that you downloaded.
 5. Make a new environment on Anaconda Prompt and activate it.
 ```
-conda create -n NAME_YOU_WANT
+conda create -n NAME_YOU_WANT python=3.8
 
 conda activate NAME_YOU_WANT
 ```
