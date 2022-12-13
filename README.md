@@ -15,7 +15,7 @@ This is face recognition program based on open CV. It uses YuNet as a face detec
 [![Youtube demo Video](http://img.youtube.com/vi/nQ3bf4chPDQ/0.jpg)](https://youtu.be/nQ3bf4chPDQ)  
 click image to View demo video.
 ![Logimage](https://user-images.githubusercontent.com/100254362/206968705-610e8edb-0308-4581-ab95-4b1265a2a40c.jpg)
-
+This is log image.
 photo by Spencer Selover, Mateus Souza, Yogendra Singh
 - Type name into input box and click Registration to add new face. The program waits 3 seconds and capture the image.
 - click Recognition to Recognize face. The program will show name.
@@ -25,9 +25,12 @@ photo by Spencer Selover, Mateus Souza, Yogendra Singh
 **This program do not supports MacOS. Please use Windows 10/11 only. I highly recommend you to use Windows 11 on AMD64(x86_64)**
 1. Install miniconda 3. https://docs.conda.io/en/latest/miniconda.html
 2. Run anaconda prompt
-3. Download the project.
-4. Go to the project file directory that you downloaded.
-5. Make a new environment on Anaconda Prompt and activate it.
+3. Download the project. You can download zip file of this project by clicking green "Code" button on the top right and click "Download ZIP". Unzip It.
+4. Go to the project file directory that you downloaded. Replace DIRECTORY_OF_PROJECT_FILES to directory of files that you just downloaded.
+```
+cd DIRECTORY_OF_PROJECT_FILES
+```
+5. Make a new environment on Anaconda Prompt and activate it. Replace NAEM_YOU_WANT to anaconda environment name.
 ```
 conda create -n NAME_YOU_WANT python=3.8
 
@@ -37,10 +40,14 @@ conda activate NAME_YOU_WANT
 ```
 python install.py
 ```
-7. Run main program
+7. Run main program. Replace RESOLUTIN_YOU_WANT to integer number like 720.
 ```
 python main.py RESOLUTION_YOU_WANT
 ```
+# What I additionally installed for this project
+- opencv-python 4.6.0.66
+- Pillow 9.3.9  
+You do NOT need to install these pakages. install.py will do everything you need to run main.py.
 # FAQ
 Q: It doesn't work.  
 A: You can try these steps.  
